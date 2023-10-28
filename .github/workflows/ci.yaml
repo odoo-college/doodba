@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - main
   schedule:
     # See https://crontab.guru/weekly
     - cron: 0 0 * * 0
@@ -35,6 +35,7 @@ jobs:
         # Test modern Odoo versions with latest Postgres version
         pg_version: ["14"]
         odoo_version:
+          - "17.0"
           - "16.0"
           - "15.0"
           - "14.0"
@@ -47,9 +48,9 @@ jobs:
             odoo_version: "11.0"
     env:
       # Indicates what's the equivalent to tecnativa/doodba:latest image
-      LATEST_RELEASE: "16.0"
+      LATEST_RELEASE: "17.0"
       # Variables found by default in Docker Hub builder
-      DOCKER_REPO: tecnativa/doodba
+      DOCKER_REPO: odoo-college/doodba
       DOCKER_TAG: ${{ matrix.odoo_version }}
       GIT_SHA1: ${{ github.sha }}
       # Other variables to configure tests and execution environment
@@ -73,14 +74,18 @@ jobs:
       - run: poetry run python -m unittest -v tests
       # Push
       - name: push to docker hub
-        if: github.repository == 'Tecnativa/doodba' && github.ref == 'refs/heads/master'
+        if:
+          github.repository == 'odoo-college/doodba' && github.ref ==
+          'refs/heads/main'
         env:
           REGISTRY_HOST: docker.io
           REGISTRY_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
           REGISTRY_USERNAME: ${{ secrets.DOCKERHUB_LOGIN }}
         run: poetry run ./hooks/push
       - name: push to github container registry
-        if: github.repository == 'Tecnativa/doodba' && github.ref == 'refs/heads/master'
+        if:
+          github.repository == 'odoo-college/doodba' && github.ref ==
+          'refs/heads/main'
         env:
           REGISTRY_HOST: ghcr.io
           REGISTRY_PASSWORD: ${{ secrets.BOT_TOKEN }}
