@@ -86,6 +86,7 @@ RUN python -m venv --system-site-packages /qa/venv \
     && pip install \
         click \
         coverage \
+        six \
     && deactivate \
     && mkdir -p /qa/artifacts
 
