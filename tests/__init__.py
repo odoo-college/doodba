@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.DEBUG)
 DIR = dirname(__file__)
 ODOO_PREFIX = ("odoo", "--stop-after-init", "--workers=0")
 ODOO_VERSIONS = frozenset(
-    environ.get("DOCKER_TAG", "11.0 12.0 13.0 14.0 15.0 16.0 17.0").split()
+    environ.get("DOCKER_TAG", "17.0").split()
 )
 PG_VERSIONS = frozenset(environ.get("PG_VERSIONS", "14").split())
 SCAFFOLDINGS_DIR = join(DIR, "scaffoldings")
