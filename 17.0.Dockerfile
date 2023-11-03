@@ -137,7 +137,6 @@ RUN build_deps=" \
         python-magic \
         watchdog \
         wdb \
-        six \
     && (python3 -m compileall -q /usr/local/lib/python3.10/ || true) \
     # generate flanker cached tables during install when /usr/local/lib/ is still intended to be written to
     # https://github.com/Tecnativa/doodba/issues/486
